@@ -17,7 +17,7 @@ class CircularDoublyLinkedList:
     def __init__(self, represent=True):
 
         self.__head = None
-        self.__root = None
+        self.__tail = None
 
         self.__len = 0
 
@@ -61,11 +61,11 @@ class CircularDoublyLinkedList:
                 if self.__len > 1:
                     new_node = CircularDoublyLinkedList.__Node(value)
 
-                    new_node.last = self.__root
-                    self.__root.next = new_node
+                    new_node.last = self.__tail
+                    self.__tail.next = new_node
 
-                    self.__root = new_node
-                    self.__root.next = self.__head
+                    self.__tail = new_node
+                    self.__tail.next = self.__head
 
                     self.__len += 1
 
@@ -73,10 +73,10 @@ class CircularDoublyLinkedList:
                     new_node = CircularDoublyLinkedList.__Node(value)
 
                     self.__head = new_node
-                    self.__root = new_node
+                    self.__tail = new_node
 
-                    self.__head.last = self.__root
-                    self.__head.next = self.__root
+                    self.__head.last = self.__tail
+                    self.__head.next = self.__tail
 
                     self.__len += 1
 
@@ -85,11 +85,11 @@ class CircularDoublyLinkedList:
 
                     self.__head.next = new_node
 
-                    self.__root.next = new_node
+                    self.__tail.next = new_node
                     new_node.last = self.__head
 
-                    self.__root = new_node
-                    self.__root.next = self.__head
+                    self.__tail = new_node
+                    self.__tail.next = self.__head
 
                     self.__len += 1
 
@@ -144,8 +144,8 @@ class CircularDoublyLinkedList:
 
             self.__head = new_node
 
-            self.__head.last = self.__root
-            self.__root.next = self.__head
+            self.__head.last = self.__tail
+            self.__tail.next = self.__head
 
             self.__len += 1
 
@@ -155,13 +155,13 @@ class CircularDoublyLinkedList:
         elif index == self.__len:
             new_node = CircularDoublyLinkedList.__Node(element)
 
-            self.__root.next = new_node
+            self.__tail.next = new_node
             self.__head.last = new_node
 
             new_node.next = self.__head
-            new_node.last = self.__root
+            new_node.last = self.__tail
 
-            self.__root = new_node
+            self.__tail = new_node
 
             self.__len += 1
 
@@ -199,11 +199,11 @@ class CircularDoublyLinkedList:
             current = self.__head
             while self.__len > length:
 
-                if element == self.__root.value and current == self.__root:
-                    self.__root.last.next = self.__head
-                    self.__root = self.__root.last
+                if element == self.__tail.value and current == self.__tail:
+                    self.__tail.last.next = self.__head
+                    self.__tail = self.__tail.last
 
-                    self.__head.last = self.__root
+                    self.__head.last = self.__tail
 
                     self.__len -= 1
 
@@ -229,8 +229,8 @@ class CircularDoublyLinkedList:
 
         else:
 
-            self.__root.next = self.__head.next
-            self.__head.next.last = self.__root
+            self.__tail.next = self.__head.next
+            self.__head.next.last = self.__tail
 
             self.__head = self.__head.next
 
@@ -239,10 +239,10 @@ class CircularDoublyLinkedList:
     def pop(self, index=None):
 
         if index is None:
-            self.__root.last.next = self.__head
-            self.__root.next.last = self.__root.last
+            self.__tail.last.next = self.__head
+            self.__tail.next.last = self.__tail.last
 
-            self.__root = self.__root.last
+            self.__tail = self.__tail.last
 
             self.__len -= 1
 
@@ -255,8 +255,8 @@ class CircularDoublyLinkedList:
             raise IndexError("Index out of range")
 
         if index == 0:
-            self.__head.next.last = self.__root
-            self.__root.next = self.__head.next
+            self.__head.next.last = self.__tail
+            self.__tail.next = self.__head.next
 
             self.__head = self.__head.next
 
@@ -364,7 +364,7 @@ class CircularDoublyLinkedList:
 
         while new_list.__len != 0:
 
-            self.add(new_list.__root.value)
+            self.add(new_list.__tail.value)
             new_list.pop()
 
     def sort(self):
@@ -406,7 +406,7 @@ class CircularDoublyLinkedList:
                     test = input(f"{str(current)} ")
 
                     if test == "<" and current == self.__head:
-                        current = self.__root
+                        current = self.__tail
 
                     elif test == "<":
                         current = current.last
@@ -429,7 +429,7 @@ class CircularDoublyLinkedList:
             string = ""
             while True:
 
-                if current != self.__root:
+                if current != self.__tail:
                     string += f"{current.value}, "
 
                 else:
